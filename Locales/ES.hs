@@ -1,3 +1,5 @@
+import Data.Char
+
 dni_letters = "TRWAGMYFPDXBNJZSQVHLCKET"
 
 dni :: String -> Bool
@@ -17,6 +19,12 @@ ssn code = c == checksum
                             else read $ (show a) ++ (show b)
                       c = mod d 97
 
+ccc_mod11 :: Int -> Int
+ccc_mod11 value = case mod value 11 of
+                    10 -> 1
+                    11 -> 0
+                    otherwise -> mod value 11
+
 ccc :: String -> Bool
 ccc code = result == controlCode
         where weights = [1, 2, 4, 8, 5, 10, 9, 7, 3, 6]
@@ -24,5 +32,6 @@ ccc code = result == controlCode
               office = take 4 $ drop 4 code
               controlCode = take 2 $ drop 8 code
               account = take 10 $ drop 10 code
-              firstResult = zipWith (*) (map read ("00" ++ entity ++ office)) weights
-              result = 0
+              firstResult = ccc_mod11 $ sum $ zipWith (*) (map digitToInt $ "00" ++ entity ++ office) weights
+              secondResult = ccc_mod11 $ sum $ zipWith (*) (map digitToInt account) weights
+              result = [intToDigit firstResult, intToDigit secondResult]
