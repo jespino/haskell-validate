@@ -1,3 +1,5 @@
+module Validate.ES where
+
 import Data.Char
 
 dni_letters = "TRWAGMYFPDXBNJZSQVHLCKET"
@@ -7,6 +9,7 @@ dni ('X':xs) = dni xs
 dni code = (last code) == dni_letters !! ((read $ init code) `mod` 23)
 
 postalCode :: String -> Bool
+postalCode "" = False
 postalCode code = 1000 < (read code) && (read code) < 53000
 
 ssn :: String -> Bool
