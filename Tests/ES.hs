@@ -10,3 +10,5 @@ ccc4 = assertEqual "" False (ccc "0")
 ccc5 = assertEqual "" False (ccc "1111 1111 11 1111111111")
 ccc6 = assertEqual "" True (ccc "0001 0001 65 0000000001")
 ccc7 = assertEqual "" False (ccc "")
+
+dni1 = assertEqual "" True (dni "00000000")
