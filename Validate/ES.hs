@@ -4,9 +4,13 @@ import Data.Char
 
 dni_letters = "TRWAGMYFPDXBNJZSQVHLCKET"
 
+dniStrict :: String -> Bool
+dniStrict [] = False
+dniStrict ('X':xs) = dni xs
+dniStrict code = (last code) == dni_letters !! ((read $ init code) `mod` 23)
+
 dni :: String -> Bool
-dni ('X':xs) = dni xs
-dni code = (last code) == dni_letters !! ((read $ init code) `mod` 23)
+dni code = dniStrict $ filter (\x -> not (x `elem` ['-', ' '])) (map toUpper code)
 
 postalCode :: String -> Bool
 postalCode "" = False
@@ -38,3 +42,7 @@ ccc code = result == controlCode
               firstResult = ccc_mod11 $ sum $ zipWith (*) (map digitToInt $ "00" ++ entity ++ office) weights
               secondResult = ccc_mod11 $ sum $ zipWith (*) (map digitToInt account) weights
               result = [intToDigit firstResult, intToDigit secondResult]
+
+-- Not implemented
+cif :: String -> Bool
+cif code = False
