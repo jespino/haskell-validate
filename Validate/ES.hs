@@ -26,14 +26,8 @@ ssn code = c == checksum
                             else read $ (show a) ++ (show b)
                       c = mod d 97
 
-ccc_mod11 :: Int -> Int
-ccc_mod11 value = case mod value 11 of
-                    10 -> 1
-                    11 -> 0
-                    otherwise -> mod value 11
-
-ccc :: String -> Bool
-ccc code = result == controlCode
+cccStrict :: String -> Bool
+cccStrict code = result == controlCode
         where weights = [1, 2, 4, 8, 5, 10, 9, 7, 3, 6]
               entity = take 4 code
               office = take 4 $ drop 4 code
@@ -42,6 +36,13 @@ ccc code = result == controlCode
               firstResult = ccc_mod11 $ sum $ zipWith (*) (map digitToInt $ "00" ++ entity ++ office) weights
               secondResult = ccc_mod11 $ sum $ zipWith (*) (map digitToInt account) weights
               result = [intToDigit firstResult, intToDigit secondResult]
+              ccc_mod11 value = case mod value 11 of
+                    10 -> 1
+                    11 -> 0
+                    otherwise -> mod value 11
+
+ccc :: String -> Bool
+ccc code = cccStrict $ filter (\x -> not (x `elem` ['-', ' '])) (map toUpper code)
 
 -- Not implemented
 cif :: String -> Bool

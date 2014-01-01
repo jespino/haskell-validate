@@ -4,13 +4,23 @@ import Validate.ES
 import Test.HUnit
 
 tests_ES_ccc = TestList [
-        TestLabel "ccc1" $ TestCase $ assertEqual "" True (ccc "2077 0024 00 3102575766"),
-        TestLabel "ccc2" $ TestCase $ assertEqual "" False (ccc "2034 4505 73 1000034682"),
-        TestLabel "ccc3" $ TestCase $ assertEqual "" True (ccc "0000 0000 00 0000000000"),
-        TestLabel "ccc4" $ TestCase $ assertEqual "" False (ccc "0"),
-        TestLabel "ccc5" $ TestCase $ assertEqual "" False (ccc "1111 1111 11 1111111111"),
-        TestLabel "ccc6" $ TestCase $ assertEqual "" True (ccc "0001 0001 65 0000000001"),
-        TestLabel "ccc7" $ TestCase $ assertEqual "" False (ccc "")
+        TestLabel "ccc1" $ TestCase $ assertEqual "" True (ccc "20770024003102575766"),
+        TestLabel "ccc2" $ TestCase $ assertEqual "" True (ccc "2077 0024 00 3102575766"),
+        TestLabel "ccc3" $ TestCase $ assertEqual "" False (ccc "2034 4505 73 1000034682"),
+        TestLabel "ccc4" $ TestCase $ assertEqual "" True (ccc "0000 0000 00 0000000000"),
+        TestLabel "ccc5" $ TestCase $ assertEqual "" False (ccc "0"),
+        TestLabel "ccc6" $ TestCase $ assertEqual "" False (ccc "1111 1111 11 1111111111"),
+        TestLabel "ccc7" $ TestCase $ assertEqual "" True (ccc "0001 0001 65 0000000001"),
+        TestLabel "ccc8" $ TestCase $ assertEqual "" False (ccc ""),
+        TestLabel "ccc1-strict" $ TestCase $ assertEqual "" True (cccStrict "20770024003102575766"),
+        TestLabel "ccc1-strict" $ TestCase $ assertEqual "" False (cccStrict "11111111111111111111"),
+        TestLabel "ccc2-strict" $ TestCase $ assertEqual "" False (evaluate (cccStrict "2077 0024 00 3102575766")),
+        TestLabel "ccc3-strict" $ TestCase $ assertEqual "" False (evaluate (cccStrict "2034 4505 73 1000034682")),
+        TestLabel "ccc4-strict" $ TestCase $ assertEqual "" False (evaluate (cccStrict "0000 0000 00 0000000000")),
+        TestLabel "ccc5-strict" $ TestCase $ assertEqual "" False (evaluate (cccStrict "0")),
+        TestLabel "ccc6-strict" $ TestCase $ assertEqual "" False (evaluate (cccStrict "1111 1111 11 1111111111")),
+        TestLabel "ccc7-strict" $ TestCase $ assertEqual "" False (evaluate (cccStrict "0001 0001 65 0000000001")),
+        TestLabel "ccc8-strict" $ TestCase $ assertEqual "" False (evaluate (cccStrict ""))
     ]
 
 tests_ES_dni = TestList [
