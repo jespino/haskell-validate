@@ -27,14 +27,16 @@ ssn code = c == checksum
                       c = mod d 97
 
 cccStrict :: String -> Bool
-cccStrict code = result == controlCode
+cccStrict code = case all isDigit code of
+                    True -> result == controlCode
+                    False -> False
         where weights = [1, 2, 4, 8, 5, 10, 9, 7, 3, 6]
               entity = take 4 code
               office = take 4 $ drop 4 code
               controlCode = take 2 $ drop 8 code
               account = take 10 $ drop 10 code
-              firstResult = ccc_mod11 $ sum $ zipWith (*) (map digitToInt $ "00" ++ entity ++ office) weights
-              secondResult = ccc_mod11 $ sum $ zipWith (*) (map digitToInt account) weights
+              firstResult = ccc_mod11 $ 11 - (sum $ zipWith (*) (map digitToInt $ "00" ++ entity ++ office) weights)
+              secondResult = ccc_mod11 $ 11 - (sum $ zipWith (*) (map digitToInt account) weights)
               result = [intToDigit firstResult, intToDigit secondResult]
               ccc_mod11 value = case mod value 11 of
                     10 -> 1
