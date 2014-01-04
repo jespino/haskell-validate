@@ -2,19 +2,22 @@ module Validate.ES where
 
 import Data.Char
 
-dni_letters = "TRWAGMYFPDXBNJZSQVHLCKET"
-
 dniStrict :: String -> Bool
 dniStrict [] = False
-dniStrict ('X':xs) = dni xs
-dniStrict code = (last code) == dni_letters !! ((read $ init code) `mod` 23)
+dniStrict ('X':xs) = dniStrict xs
+dniStrict code = case all isDigit (init code) of
+                 True -> (last code) == dni_letters !! ((read $ init code) `mod` 23)
+                 False -> False
+                 where dni_letters = "TRWAGMYFPDXBNJZSQVHLCKET"
 
 dni :: String -> Bool
 dni code = dniStrict $ filter (\x -> not (x `elem` ['-', ' '])) (map toUpper code)
 
 postalCode :: String -> Bool
 postalCode "" = False
-postalCode code = 1000 < (read code) && (read code) < 53000
+postalCode code = case all isDigit code of
+                    True -> 1000 < (read code) && (read code) < 53000
+                    False -> False
 
 ssn :: String -> Bool
 ssn code = c == checksum
