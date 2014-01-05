@@ -112,7 +112,21 @@ tests_ES_ssn = TestList [
         TestLabel "ssn11" $ False ~=? (ssn "201113617312"),
         TestLabel "ssn12" $ False ~=? (ssn "301113617334"),
         TestLabel "ssn13" $ False ~=? (ssn "309221363823"),
-        TestLabel "ssn14" $ False ~=? (ssn "313221363822")
+        TestLabel "ssn14" $ False ~=? (ssn "313221363822"),
+        TestLabel "ssn1-strict" $ True ~=? (ssnStrict "720111361735"),
+        TestLabel "ssn2-strict" $ True ~=? (ssnStrict "281234567840"),
+        TestLabel "ssn3-strict" $ True ~=? (ssnStrict "351234567825"),
+        TestLabel "ssn4-strict" $ False ~=? (ssnStrict "35/12345678/25"),
+        TestLabel "ssn5-strict" $ False ~=? (ssnStrict "35X1234567825"),
+        TestLabel "ssn6-strict" $ False ~=? (ssnStrict "031322136383"),
+        TestLabel "ssn7-strict" $ False ~=? (ssnStrict "72011a361732"),
+        TestLabel "ssn8-strict" $ False ~=? (ssnStrict "73011a361731"),
+        TestLabel "ssn9-strict" $ False ~=? (ssnStrict "03092a136383"),
+        TestLabel "ssn10-strict" $ False ~=? (ssnStrict "03132a136385"),
+        TestLabel "ssn11-strict" $ False ~=? (ssnStrict "201113617312"),
+        TestLabel "ssn12-strict" $ False ~=? (ssnStrict "301113617334"),
+        TestLabel "ssn13-strict" $ False ~=? (ssnStrict "309221363823"),
+        TestLabel "ssn14-strict" $ False ~=? (ssnStrict "313221363822")
     ]
 
 tests_ES = TestList [tests_ES_ccc, tests_ES_dni, tests_ES_cif, tests_ES_postalCode, tests_ES_ssn]

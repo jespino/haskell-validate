@@ -20,10 +20,15 @@ postalCode code = case all isDigit code of
                     False -> False
 
 ssn :: String -> Bool
-ssn code = c == checksum
+ssn code = ssnStrict $ filter (\x -> not (x `elem` ['-', ' ', '/'])) (map toUpper code)
+
+ssnStrict :: String -> Bool
+ssnStrict code = case all isDigit code of
+                True -> c == checksum
+                False -> False
                 where a = read $ take 2 $ code
                       b = read $ take 8 $ drop 2 $ code
-                      checksum = read $ take 2 $ drop 10 $ code
+                      checksum = read $ take 2 $ drop 10 code
                       d = if b < 10000000
                             then b + (a * 10000000)
                             else read $ (show a) ++ (show b)
