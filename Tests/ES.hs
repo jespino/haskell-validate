@@ -99,7 +99,7 @@ tests_ES_postalCode = TestList [
     ]
 
 tests_ES_ssn = TestList [
-        TestLabel "ssn1" $ True ~=? (ssn "720111361735"),
+        TestLabel "ssn1" $ False ~=? (ssn "720111361735"),
         TestLabel "ssn2" $ True ~=? (ssn "281234567840"),
         TestLabel "ssn3" $ True ~=? (ssn "351234567825"),
         TestLabel "ssn4" $ True ~=? (ssn "35/12345678/25"),
@@ -113,7 +113,7 @@ tests_ES_ssn = TestList [
         TestLabel "ssn12" $ False ~=? (ssn "301113617334"),
         TestLabel "ssn13" $ False ~=? (ssn "309221363823"),
         TestLabel "ssn14" $ False ~=? (ssn "313221363822"),
-        TestLabel "ssn1-strict" $ True ~=? (ssnStrict "720111361735"),
+        TestLabel "ssn1-strict" $ False ~=? (ssnStrict "720111361735"),
         TestLabel "ssn2-strict" $ True ~=? (ssnStrict "281234567840"),
         TestLabel "ssn3-strict" $ True ~=? (ssnStrict "351234567825"),
         TestLabel "ssn4-strict" $ False ~=? (ssnStrict "35/12345678/25"),
