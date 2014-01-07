@@ -51,6 +51,22 @@ cccStrict code = case all isDigit code of
 ccc :: String -> Bool
 ccc code = cccStrict $ filter (\x -> not (x `elem` ['-', ' '])) (map toUpper code)
 
--- Not implemented
 cif :: String -> Bool
-cif code = False
+cif code = cifStrict $ filter (\x -> not (x `elem` ['-'])) (map toUpper code)
+
+cifStrict :: String -> Bool
+cifStrict code = controlCode == (intToDigit d) || controlCode == (letters !! d)
+        where letters = "ABCDEFGHIJ"
+              letter = code !! 0
+              odd_numbers = map digitToInt [code !! 1, code !! 3, code !! 5, code !! 7]
+              even_numbers = map digitToInt [code !! 2, code !! 4, code !! 6]
+              controlCode = code !! 8
+              a = sum even_numbers
+              b = sum $ map sum_odd_numbers odd_numbers
+              e = (a + b) `mod` 10
+              d = case (e == 0) of
+                    True -> 0
+                    False -> 10 - e
+              sum_odd_numbers x = case ((x * 2) >= 10) of
+                                    True -> ((x * 2) `mod` 10) + 1
+                                    False -> x * 2
